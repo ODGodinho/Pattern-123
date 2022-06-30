@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="PHP_CodeSniffer" xsi:noNamespaceSchemaLocation="phpcs.xsd">
+    <description>The coding standard for PHP_CodeSniffer By ODGodinho.</description>
+
+    <arg name="colors"/>
+    <arg value="ps" />
+    <config name="testVersion" value="8.0"/>
+    <config name="php_version" value="80000"/>
+
+    <rule ref="PSR12" />
+
+    <rule ref="Generic.Files.LineLength">
+        <properties>
+            <property name="lineLimit" value="120"/>
+            <property name="absoluteLineLimit" value="0"/>
+        </properties>
+    </rule>
+
+    <!-- Obrigatoriedade em Visivilidade constantes -->
+    <rule ref="PSR12.Properties.ConstantVisibility.NotFound">
+        <type>error</type>
+    </rule>
+
+    <!-- Namespace ignore migrations -->
+    <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
+        <exclude-pattern>*/database/migrations/*</exclude-pattern>
+    </rule>
+
+    <!-- Force espaço no cast -->
+    <rule ref="Generic.Formatting.SpaceAfterCast" />
+    <rule ref="Squiz.WhiteSpace.CastSpacing"/>
+
+    <!-- Não permite espaço apos a ! exclamação -->
+    <rule ref="Generic.Formatting.SpaceAfterNot">
+        <properties>
+            <property name="spacing" value="0" />
+        </properties>
+    </rule>
+
+    <!-- força identar o array da maneira correta -->
+    <rule ref="Generic.Arrays.ArrayIndent" />
+
+    <!-- não permite abrir array com array() -->
+    <rule ref="Generic.Arrays.DisallowLongArraySyntax" />
+
+    <!-- força existir ", (virgula)" no final do array -->
+    <rule ref="Squiz.Arrays.ArrayDeclaration.NoComma" />
+    <rule ref="SlevomatCodingStandard.Arrays.TrailingArrayComma.MissingTrailingComma" />
+
+    <!-- disabilita espaço ao recuperar array $a[ 'ITEM' ]; ou $a[ ] = 12; -->
+    <rule ref="Squiz.Arrays.ArrayBracketSpacing" />
+
+    <!-- Docs Blocks devem começar com letra maiuscula -->
+    <rule ref="Generic.Commenting.DocComment.ShortNotCapital" />
+
+    <!-- So permite alinhamento com 1 espaço -->
+    <rule ref="Generic.Formatting.MultipleStatementAlignment">
+		<properties>
+			<property name="maxPadding" value="1" />
+		</properties>
+	</rule>
+
+    <!-- Força o contrutor ser inicializado com __constructor -->
+    <rule ref="Generic.NamingConventions.ConstructorName"/>
+
+    <!-- As seguinte funções não poderam ser usadas -->
+    <rule ref="Generic.PHP.ForbiddenFunctions">
+        <properties>
+            <property name="forbiddenFunctions" type="array" value="sizeof=>count,delete=>unset,print=>echo,is_null=>null,create_function=>null"/>
+        </properties>
+    </rule>
+
+    <!-- Desabilita concatenação de strings desnecessarias ex: "a" . "b" -->
+    <rule ref="Generic.Strings.UnnecessaryStringConcat">
+        <properties>
+            <property name="allowMultiline" value="true" />
+        </properties>
+    </rule>
+
+    <!-- desabilita quebrar linha depois do IGUAL = -->
+    <rule ref="PEAR.Formatting.MultiLineAssignment"/>
+
+    <!-- Ao quebrar um propriedade na -> força identar 4 espaços -->
+    <rule ref="PEAR.WhiteSpace.ObjectOperatorIndent">
+        <properties>
+            <property name="indent" value="4"/>
+        </properties>
+    </rule>
+
+    <!-- Não permite comentario de @throws sem a classe -->
+    <rule ref="Squiz.Commenting.FunctionComment.EmptyThrows" />
+
+    <!-- Força terminar comentario throw com PONTO . -->
+    <rule ref="Squiz.Commenting.FunctionComment.ThrowsNoFullStop" />
+
+    <!-- Força o comentario começar com letra maiuscula -->
+    <rule ref="Squiz.Commenting.FunctionComment.ThrowsNotCapital" />
+
+    <!-- Força o comentario props começar com letra maiuscula -->
+    <rule ref="Squiz.Commenting.FunctionComment.ParamCommentNotCapital"/>
+
+    <!-- Obriga as tipagens tipo basico seja passada para o parametro da função tambem -->
+    <!-- <rule ref="Squiz.Commenting.FunctionComment.ScalarTypeHintMissing" /> -->
+
+    <!-- Força q todas as tipagens seja passada para o parametro tambem -->
+    <!-- <rule ref="Squiz.Commenting.FunctionComment.TypeHintMissing" /> -->
+
+    <!-- Se a tipagem doc block nao bater com a da função -->
+    <rule ref="Squiz.Commenting.FunctionComment.IncorrectTypeHint" />
+
+    <!-- Força tipagem de retorno função -->
+    <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint" />
+
+    <!-- Define o Agrupamento e ordem de params -->
+    <rule ref="SlevomatCodingStandard.Commenting.DocCommentSpacing">
+        <properties>
+            <property name="annotationsGroups" type="array">
+                <element value="
+                    @ORM\,
+                "/>
+                <element value="
+                    @var,
+                    @param
+                "/>
+                <element value="
+                    @throws,
+                    @return,
+                "/>
+            </property>
+        </properties>
+    </rule>
+
+    <!-- Força tipagem tipo array -->
+    <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification">
+		<message>Use @param array&lt;Type&gt; You need specify Type hint for this itens</message>
+    </rule>
+
+    <!-- Alerta se o comentario seja um possivel codigo -->
+    <rule ref="Squiz.PHP.CommentedOutCode" />
+
+    <!-- Força Existir DeclareStrictTypes no arquivo -->
+    <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing" />
+
+    <!-- Força Tipagem Properties Classe + block de tipagem desnecessaria docblock -->
+    <!-- Não pode ser usado por causa do laravel -->
+    <!-- <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint" /> -->
+
+    <!-- Bloquea use nao usados + MismatchingCaseSensitivity Inconsistent nome class -->
+    <rule ref="SlevomatCodingStandard.Namespaces.UnusedUses">
+        <properties>
+            <property name="searchAnnotations"  type="bool" value="true"></property>
+        </properties>
+    </rule>
+
+    <!-- Bloqueia espaços duplos+ em qualquer lugar do codigo -->
+    <rule ref="SlevomatCodingStandard.Whitespaces.DuplicateSpaces.DuplicateSpaces" />
+
+    <!-- Alerta quando o use de função não está sendo usado -->
+    <rule ref="SlevomatCodingStandard.Functions.UnusedInheritedVariablePassedToClosure.UnusedInheritedVariable" />
+
+    <!-- Ultimo parametro ao chamar função deve ter virgula -->
+    <rule ref="SlevomatCodingStandard.Functions.RequireTrailingCommaInCall.MissingTrailingComma" />
+
+    <!-- Ultimo parametro ao Declarar função deve ter virgula -->
+    <rule ref="SlevomatCodingStandard.Functions.RequireTrailingCommaInDeclaration.MissingTrailingComma" />
+
+    <!-- Utilize arrow function quando possivel -->
+    <rule ref="SlevomatCodingStandard.Functions.RequireArrowFunction.RequiredArrowFunction" />
+
+    <!-- Não permite comentario em branco -->
+    <rule ref="SlevomatCodingStandard.Commenting.EmptyComment.EmptyComment" />
+
+    <!-- Não permite Funçoes vazias -->
+    <rule ref="SlevomatCodingStandard.Functions.DisallowEmptyFunction.EmptyFunction" />
+
+    <!-- Warning quando uma variavel não necessita exisitr necessariamente -->
+    <rule ref="SlevomatCodingStandard.Variables.UselessVariable.UselessVariable" >
+        <type>warning</type>
+    </rule>
+
+    <!-- Você so pode quebrar parametros se a linha for maior que 120 caracters -->
+    <rule ref="SlevomatCodingStandard.Classes.RequireSingleLineMethodSignature.RequiredSingleLineSignature" />
+
+    <!-- Força linha em branco antes do retorno -->
+    <rule ref="SlevomatCodingStandard.ControlStructures.JumpStatementsSpacing.IncorrectLinesCountBeforeControlStructure" />
+
+    <!-- Quebre os parametros se maior que 120 caracters a linha -->
+    <rule ref="SlevomatCodingStandard.Classes.RequireMultiLineMethodSignature.RequiredMultiLineSignature" />
+
+    <!-- Força linha em branco in throw new Exception() -->
+    <rule ref="SlevomatCodingStandard.ControlStructures.JumpStatementsSpacing.IncorrectLinesCountBeforeControlStructure" />
+
+    <!-- Força usar shot param interger-int boolean-bool -->
+    <rule ref="SlevomatCodingStandard.TypeHints.LongTypeHints.UsedLongTypeHint" />
+
+    <!-- Use docblock inline quando possivel -->
+    <rule ref="SlevomatCodingStandard.Commenting.RequireOneLineDocComment.MultiLineDocComment" />
+
+    <!-- Força especificar Strict param exemplo in_array(.., .., true) -->
+    <rule ref="SlevomatCodingStandard.Functions.StrictCall.StrictParameterMissing" />
+
+    <!-- Força use e nao namespace completo ao usar uma classe -->
+    <rule ref="SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly">
+        <properties>
+            <property name="searchAnnotations" value="1"/>
+        </properties>
+    </rule>
+
+    <!-- Força espaço Em array de 1 linha -->
+    <rule ref="SlevomatCodingStandard.Arrays.SingleLineArrayWhitespace">
+        <properties>
+            <property name="spacesAroundBrackets" value="1"/>
+        </properties>
+	</rule>
+
+    <!-- Alerta se existir @param a mais que o necessario -->
+    <rule ref="Squiz.Commenting.FunctionComment.ExtraParamComment">
+		<message>Extra @param annotation</message>
+	</rule>
+
+    <!-- Alerta se a funçao tiver docblock de returno e nao tiver retorno -->
+    <rule ref="Squiz.Commenting.FunctionComment.InvalidNoReturn">
+		<message>Function has no return statement, but annotation @return is present</message>
+	</rule>
+
+    <!-- Força ter docblock de todos os @param se existir docblock -->
+    <rule ref="Squiz.Commenting.FunctionComment.MissingParamTag">
+		<message>@param annotation for parameter "%s" missing</message>
+	</rule>
+
+    <!-- Não permite fazer condição com AND ou OR extenso -->
+    <rule ref="Squiz.Operators.ValidLogicalOperators"/>
+
+    <!-- Não permite usar $this em funções staticas -->
+    <rule ref="Squiz.Scope.StaticThisUsage"/>
+
+    <!-- Não permite parentese em echo php -->
+    <rule ref="Squiz.Strings.EchoedStrings"/>
+
+    <!-- So pode quebrar recursividade de objeto antes da seta nao depois -->
+    <rule ref="Squiz.WhiteSpace.ObjectOperatorSpacing">
+        <!-- permite a quebra antes da seta -->
+		<exclude name="Squiz.WhiteSpace.ObjectOperatorSpacing.Before"/>
+	</rule>
+
+    <!-- Não permite espaço apos a => do array -->
+    <rule ref="Squiz.WhiteSpace.OperatorSpacing">
+		<properties>
+            <!-- ignora se for uma nova linha -->
+			<property name="ignoreNewlines" value="true"/>
+		</properties>
+	</rule>
+
+    <!-- Não permite mais de 1 quebra de linha em branco -->
+    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.EmptyLines">
+		<severity>5</severity>
+	</rule>
+
+    <!-- @TODO: adicionar alerta de erro se n tiver virgula no ultimo parametro do phpcs -->
+
+    <!-- Erro quando algum throws n foi colocado na docblock -->
+    <rule ref="Squiz.Commenting.FunctionCommentThrowTag" />
+
+    <!-- Previne excessoes burras com catch Exception e Throwable -->
+    <rule ref="SlevomatCodingStandard.Exceptions.DeadCatch" />
+
+    <!-- Não use Exception use throwable -->
+    <rule ref="SlevomatCodingStandard.Exceptions.ReferenceThrowableOnly">
+        <!-- Exception::class devem ser permitidas em tests -->
+        <exclude-pattern>*/tests/*</exclude-pattern>
+    </rule>
+
+    <!-- Habilita todos recurso de throwable -->
+    <rule ref="SlevomatCodingStandard.Exceptions">
+        <!-- Desabilita a obrigatoriedade de capturar a variavel da Exception -->
+        <exclude name="SlevomatCodingStandard.Exceptions.DisallowNonCapturingCatch"/>
+    </rule>
+
+    <!-- Força docblock de return -->
+    <rule ref="Squiz.Commenting.FunctionComment.MissingReturn"/>
+
+    <rule ref="PHPCompatibility">
+        <exclude-pattern>*/app/Enums/*</exclude-pattern>
+    </rule>
+
+    <exclude-pattern>*/vendor/*</exclude-pattern>
+    <exclude-pattern>*/node_modules/*</exclude-pattern>
+    <exclude-pattern>*/storage/*</exclude-pattern>
+    <exclude-pattern>*.js</exclude-pattern>
+    <exclude-pattern>*.blade.php</exclude-pattern>
+</ruleset>

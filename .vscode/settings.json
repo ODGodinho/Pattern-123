@@ -1,0 +1,9 @@
+{
+    "conventionalCommits.scopes": [
+        "Init",
+        "Build",
+        "Git",
+        "Hooks",
+        "Lint"
+    ]
+}
